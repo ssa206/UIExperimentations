@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Spinning Wheel</title>
+    <style>
+        /* CSS for the spinning wheel and button goes here */
+        #wheel {
+            transition: transform 5s ease-out;
+        }
+
+        .segment {
+            font-size: 14px;
+            text-anchor: middle;
+        }
+    </style>
+</head>
+<body>
+    <svg id="wheel" height="300" width="300">
+        <circle cx="150" cy="150" r="100" stroke="black" stroke-width="3" fill="red" />
+    </svg>
+    <button id="spin">Spin</button>
+
+    <script>
+        var segments = ['$10', '$1000 Amazon.ca Gift Card', 'AirPods Max', '$10000', 'MacBook Air M2', 'Try Again'];
+        var wheel = document.getElementById('wheel');
+        var radius = 100;
+        var cx = 150, cy = 150;
+
+        // calculate position for each segment
+        segments.forEach(function(segment, i) {
+            var angle = 2 * Math.PI / segments.length * i;
+            var x = cx + radius * Math.cos(angle - Math.PI / 2);
+            var y = cy + radius * Math.sin(angle - Math.PI / 2);
+            
+            var text = document.createElementNS("http://www.w3.org/2000/svg", 'text');
+            text.setAttribute("class", "segment");
+            text.setAttribute("x", x);
+            text.setAttribute("y", y);
+            text.textContent = segment;
+            wheel.appendChild(text);
+        });
+
+        document.getElementById('spin').addEventListener('click', function() {
+            wheel.style.transform = 'rotate(3600deg)';
+            setTimeout(function() {
+                wheel.style.transform = 'rotate(0deg)';
+                alert('Try Again');
+            }, 5000);
+        });
+    </script>
+</body>
+</html>
